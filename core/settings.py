@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-la3+e^y*!o-yj*gq(p3eztit&@p6d#7bfdzjj73d4w27bko#*g
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+AUTH_USER_MODEL = "user.User"
 
 
 # Application definition
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     "user.apps.UserConfig",
     # cors
     "corsheaders",
+    # swagger
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -79,7 +82,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

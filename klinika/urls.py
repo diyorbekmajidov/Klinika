@@ -1,7 +1,11 @@
-from urls import urlpatterns, path, include
+from django.urls import path
+from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
 
 from .views import *
 
 router = DefaultRouter()
-router.register("kilinikalar", KilinikarViewSet, basename="kilinikalar")
+
+urlpatterns = [
+    path("klinika/", KlinikaApiview.as_view()),
+]
