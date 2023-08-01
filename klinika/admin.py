@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+admin.site.register(Kilinikalar)
+admin.site.register(Bulimlar)
+admin.site.register(Shifokorlar)
+admin.site.register(Xizmatlar)
+admin.site.register(Navbatlar)
+
