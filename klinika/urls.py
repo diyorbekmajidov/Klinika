@@ -12,6 +12,7 @@ urlpatterns = [
     path("klinika/", KlinikaApiview.as_view()),
     path("xizmatlar/", XizmatlarApiview.as_view()),
     path("shifokorlar/", ShifokorlarApiview.as_view()),
+    path("narxlar/", NarxlarApiview.as_view()),
 ]
 
 if settings.DEBUG:

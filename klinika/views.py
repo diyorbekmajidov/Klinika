@@ -73,5 +73,35 @@ class ShifokorlarApiview(APIView):
         serializer = ShifokorlarSerializer(shifokor, many=True)
         return Response(serializer.data)
     
+
+class NarxlarApiview(APIView):
+
+    schema = openapi.Schema(
+        request_body = NarxlarSerializer,
+        responses={200: NarxlarSerializer(many=True)}
+        
+    )
+
+    def post(Apiview, request):
+        serializer = NarxlarSerializer(data=request.data)
+        xizmatlar = Xizmatlar.objects.get(id=request.data["xizmatlar"])
+        if serializer.is_valid():
+            serializer.save(xizmatlar=xizmatlar)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        narx = Narxlar.objects.all()
+        serializer = NarxlarSerializer(narx, many=True)
+        return Response(serializer.data)
+    
+    def put(self, request, pk):
+        narx = Narxlar.objects.get(id=pk)
+        serializer = NarxlarSerializer(instance=narx, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    
     
     
