@@ -6,15 +6,15 @@ class KilinikalarSerializer(serializers.ModelSerializer):
         model = Kilinikalar
         fields = "__all__"
 
-class BulimlarSerializer(serializers.ModelSerializer):
+class NarxlarSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Bulimlar
+        model = Narxlar
         fields = "__all__"
 
 class ShifokorlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shifokorlar
-        fields = "__all__"
+        fields = ["name", "qavat", "info", "ish_kunlari", "ish_vaqt", "img"]
 
 class XizmatlarSerializer(serializers.ModelSerializer):
     class Meta:

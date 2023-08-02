@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
@@ -31,24 +30,7 @@ class KlinikaApiview(APIView):
         return Response(serializer.data)
     
 
-class BulimlarApiview(APIView):
 
-    @swagger_auto_schema(
-        request_body = BulimlarSerializer,
-        responses={200: BulimlarSerializer(many=True)}
-    )
-
-    def post(self, request):
-        serializer = BulimlarSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def get(self, request):
-        bulim = Bulimlar.objects.all()
-        serializer = BulimlarSerializer(bulim, many=True)
-        return Response(serializer.data)
     
 class XizmatlarApiview(APIView):
     
@@ -77,7 +59,12 @@ class ShifokorlarApiview(APIView):
     )
 
     def post(self, request):
+        xizmatlar = request.data.get('xizmatlar')
+        bulim = Xizmatlar.objects.get(id=xizmatlar)
+        print(bulim)
+        request.data['xizmatlar'] = bulim.id
         serializer = ShifokorlarSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
