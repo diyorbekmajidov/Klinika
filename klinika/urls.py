@@ -8,4 +8,6 @@ router = DefaultRouter()
 
 urlpatterns = [
     path("klinika/", KlinikaApiview.as_view()),
+    path("bulimlar/", BulimlarApiview.as_view()),
+    path("shifokorlar/", ShifokorlarApiview.as_view()),
 ]

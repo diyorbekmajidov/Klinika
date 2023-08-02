@@ -13,15 +13,80 @@ from drf_yasg import openapi
 
 
 class KlinikaApiview(APIView):
-    def get(self, request):
-        klinika = Kilinikalar.objects.all()
-        serializer = KilinikalarSerializer(klinika, many=True)
-        return Response(serializer.data)
-    
+
+    @swagger_auto_schema(
+        request_body = KilinikalarSerializer,
+        responses={200: KilinikalarSerializer(many=True)}
+    )
     def post(self, request):
         serializer = KilinikalarSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        klinika = Kilinikalar.objects.all()
+        serializer = KilinikalarSerializer(klinika, many=True)
+        return Response(serializer.data)
+    
+
+class BulimlarApiview(APIView):
+
+    @swagger_auto_schema(
+        request_body = BulimlarSerializer,
+        responses={200: BulimlarSerializer(many=True)}
+    )
+
+    def post(self, request):
+        serializer = BulimlarSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        bulim = Bulimlar.objects.all()
+        serializer = BulimlarSerializer(bulim, many=True)
+        return Response(serializer.data)
+    
+class XizmatlarApiview(APIView):
+    
+        @swagger_auto_schema(
+            request_body = XizmatlarSerializer,
+            responses={200: XizmatlarSerializer(many=True)}
+        )
+    
+        def post(self, request):
+            serializer = XizmatlarSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        def get(self, request):
+            xizmat = Xizmatlar.objects.all()
+            serializer = XizmatlarSerializer(xizmat, many=True)
+            return Response(serializer.data)
+    
+class ShifokorlarApiview(APIView):
+
+    @swagger_auto_schema(
+        request_body = ShifokorlarSerializer,
+        responses={200: ShifokorlarSerializer(many=True)}
+    )
+
+    def post(self, request):
+        serializer = ShifokorlarSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        shifokor = Shifokorlar.objects.all()
+        serializer = ShifokorlarSerializer(shifokor, many=True)
+        return Response(serializer.data)
+    
+    
     
