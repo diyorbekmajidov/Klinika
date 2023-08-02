@@ -59,14 +59,12 @@ class ShifokorlarApiview(APIView):
     )
 
     def post(self, request):
-        xizmatlar = request.data.get('xizmatlar')
-        bulim = Xizmatlar.objects.get(id=xizmatlar)
-        print(bulim)
-        request.data['xizmatlar'] = bulim.id
         serializer = ShifokorlarSerializer(data=request.data)
+        xizmatlar = Xizmatlar.objects.get(id=request.data["xizmatlar"])
 
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(xizmatlar=xizmatlar)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

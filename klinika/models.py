@@ -10,7 +10,7 @@ class Kilinikalar(models.Model):
     
 class Xizmatlar(models.Model):
     name = models.CharField(max_length=100)
-    bulim = models.ForeignKey(Kilinikalar, on_delete=models.CASCADE, related_name='xizmatlar')
+    klinika = models.ForeignKey(Kilinikalar, on_delete=models.CASCADE, related_name='xizmatlar')
 
     def __str__(self):
         return self.name
@@ -29,7 +29,7 @@ class Shifokorlar(models.Model):
     ish_kunlari = models.CharField(max_length=100)
     ish_vaqt = models.CharField(max_length=100)
     img = models.ImageField(upload_to='images/', default="")
-    xizmatlar = models.OneToOneField(Xizmatlar, on_delete=models.CASCADE, related_name='shifokorlar')
+    xizmatlar = models.ForeignKey(Xizmatlar, on_delete=models.CASCADE, related_name='shifokorlar')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     

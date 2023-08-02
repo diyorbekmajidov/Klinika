@@ -7,3 +7,5 @@ admin.site.register(Shifokorlar)
 admin.site.register(Xizmatlar)
 admin.site.register(Navbatlar)
 
+
+

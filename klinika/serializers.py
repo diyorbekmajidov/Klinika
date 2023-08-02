@@ -11,14 +11,14 @@ class NarxlarSerializer(serializers.ModelSerializer):
         model = Narxlar
         fields = "__all__"
 
-class ShifokorlarSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Shifokorlar
-        fields = ["name", "qavat", "info", "ish_kunlari", "ish_vaqt", "img"]
-
 class XizmatlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Xizmatlar
+        fields = "__all__"
+
+class ShifokorlarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shifokorlar
         fields = "__all__"
 
 class NavbatlarSerializer(serializers.ModelSerializer):
