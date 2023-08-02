@@ -9,7 +9,7 @@ class KilinikalarSerializer(serializers.ModelSerializer):
 class NarxlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Narxlar
-        fields = "__all__"
+        fields = ["narx", "xizmat"]
 
 class XizmatlarSerializer(serializers.ModelSerializer):
     class Meta:

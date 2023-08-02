@@ -76,17 +76,19 @@ class ShifokorlarApiview(APIView):
 
 class NarxlarApiview(APIView):
 
-    schema = openapi.Schema(
+    @swagger_auto_schema(
         request_body = NarxlarSerializer,
         responses={200: NarxlarSerializer(many=True)}
-        
     )
 
     def post(Apiview, request):
-        serializer = NarxlarSerializer(data=request.data)
-        xizmatlar = Xizmatlar.objects.get(id=request.data["xizmatlar"])
+        data = request.data
+        xizmat = Xizmatlar.objects.get(id=data["xizmat"])
+        data["xizmat_type"] = xizmat
+        print(data)
+        serializer = NarxlarSerializer(data=data)
         if serializer.is_valid():
-            serializer.save(xizmatlar=xizmatlar)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -95,6 +97,11 @@ class NarxlarApiview(APIView):
         serializer = NarxlarSerializer(narx, many=True)
         return Response(serializer.data)
     
+    @swagger_auto_schema(
+        request_body = NarxlarSerializer,
+        responses={200: NarxlarSerializer(many=True)}
+    )
+
     def put(self, request, pk):
         narx = Narxlar.objects.get(id=pk)
         serializer = NarxlarSerializer(instance=narx, data=request.data)
