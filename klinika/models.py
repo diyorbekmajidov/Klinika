@@ -51,3 +51,14 @@ class Navbatlar(models.Model):
     def __str__(self):
         return self.name
     
+class Tashxis(models.Model):
+    navbat = models.ForeignKey(Navbatlar, on_delete=models.CASCADE)
+    shifokor = models.ForeignKey(Shifokorlar, on_delete=models.CASCADE)
+    xizmat = models.ForeignKey(Xizmatlar, on_delete=models.CASCADE)
+    narx = models.ForeignKey(Narxlar, on_delete=models.CASCADE)
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(blank=True, null=True)
+    mulohoza = models.CharField(max_length=100)
+        
+    def __str__(self):
+        return self.mulohoza

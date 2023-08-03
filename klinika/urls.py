@@ -13,6 +13,7 @@ urlpatterns = [
     path("xizmatlar/", XizmatlarApiview.as_view()),
     path("shifokorlar/", ShifokorlarApiview.as_view()),
     path("narxlar/", NarxlarApiview.as_view()),
+    path("shifokor/<int:pk>/", ShifokorGet.as_view()),
 ]
 
 if settings.DEBUG:

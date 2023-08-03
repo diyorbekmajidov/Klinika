@@ -68,9 +68,11 @@ class ShifokorlarApiview(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def get(self, request):
-        shifokor = Shifokorlar.objects.all()
-        serializer = ShifokorlarSerializer(shifokor, many=True)
+
+class ShifokorGet(APIView):
+    def get(self, request, pk):
+        shifokor = Shifokorlar.objects.get(id=pk)
+        serializer = ShifokorlarSerializer(shifokor)
         return Response(serializer.data)
     
 
@@ -83,9 +85,6 @@ class NarxlarApiview(APIView):
 
     def post(Apiview, request):
         data = request.data
-        xizmat = Xizmatlar.objects.get(id=data["xizmat"])
-        data["xizmat_type"] = xizmat
-        print(data)
         serializer = NarxlarSerializer(data=data)
         if serializer.is_valid():
             serializer.save()

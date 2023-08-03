@@ -17,9 +17,15 @@ class XizmatlarSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class ShifokorlarSerializer(serializers.ModelSerializer):
+    xizmatlar = serializers.SerializerMethodField()
+
     class Meta:
         model = Shifokorlar
-        fields = "__all__"
+        fields = ["id", "name", "qavat", "xizmatlar", "ish_kunlari", "info", "img", "ish_vaqt"]
+
+    def get_xizmatlar(self, obj):
+        return obj.xizmatlar.name
+    
 
 class NavbatlarSerializer(serializers.ModelSerializer):
     class Meta:
