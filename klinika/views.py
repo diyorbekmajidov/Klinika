@@ -1,14 +1,15 @@
-from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import viewsets
-from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.hashers import make_password
 
 
 class KlinikaApiview(APIView):
@@ -69,12 +70,11 @@ class ShifokorlarApiview(APIView):
     )
 
     def post(self, request):
-        serializer = ShifokorlarSerializer(data=request.data)
-        xizmatlar = Xizmatlar.objects.get(id=request.data["xizmatlar"])
-
+        data = request.data
+        data["password"] = make_password(data["password"])
+        serializer = ShifokorlarSerializer(data=data)
         if serializer.is_valid():
-            serializer.save(xizmatlar=xizmatlar)
-
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -148,3 +148,29 @@ class NarxlarGet(APIView):
     
     
     
+class NavbatApiview(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    """
+    Bemor uchun navbat yaratish uchun api
+    """
+    @swagger_auto_schema(
+        request_body = NavbatlarSerializer,
+        responses={200: NavbatlarSerializer(many=True)}
+    )
+
+    def post(self, request):
+        navbat = Navbatlar.objects.all()
+        data = request.data
+        data["navbat_raqam"] = navbat.count() + 1
+        serializer = NavbatlarSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    
+
+# class ShifokorCabenit(APIView):
+
+#     def get(self, request):
+#         shi

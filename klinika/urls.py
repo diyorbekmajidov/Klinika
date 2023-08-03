@@ -16,6 +16,7 @@ urlpatterns = [
     path("narxlar/", NarxlarApiview.as_view()),
     path("narxlar/<int:pk>/", NarxlarGet.as_view()),
     path("shifokor/<int:pk>/", ShifokorGet.as_view()),
+    path("navbatlar/", NavbatApiview.as_view()),
 ]
 
 if settings.DEBUG:

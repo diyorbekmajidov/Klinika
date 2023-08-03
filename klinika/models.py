@@ -28,8 +28,10 @@ class Shifokorlar(models.Model):
     info = models.TextField()
     ish_kunlari = models.CharField(max_length=100)
     ish_vaqt = models.CharField(max_length=100)
+    phone_nomber = models.CharField(max_length=100)
     img = models.ImageField(upload_to='images/', default="")
     xizmatlar = models.ForeignKey(Xizmatlar, on_delete=models.CASCADE, related_name='shifokorlar')
+    username = models.ForeignKey(Kilinikalar, on_delete=models.CASCADE, related_name='klinika')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     
@@ -43,13 +45,14 @@ class Shifokorlar(models.Model):
 class Navbatlar(models.Model):
     xizmat = models.ForeignKey(Xizmatlar, on_delete=models.CASCADE)
     shifokor = models.ForeignKey(Shifokorlar, on_delete=models.CASCADE)
+    navbat_raqam = models.IntegerField(blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
 
 
     def __str__(self):
-        return self.name
+        return self.navbat_raqam
     
 class Tashxis(models.Model):
     navbat = models.ForeignKey(Navbatlar, on_delete=models.CASCADE)
