@@ -6,15 +6,25 @@ class KilinikalarSerializer(serializers.ModelSerializer):
         model = Kilinikalar
         fields = "__all__"
 
-class NarxlarSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Narxlar
-        fields = ["narx", "xizmat"]
-
 class XizmatlarSerializer(serializers.ModelSerializer):
+    klinika = serializers.SerializerMethodField()
     class Meta:
         model = Xizmatlar
-        fields = "__all__"
+        fields = ["id", "name","klinika"]
+
+    def get_klinika(self, obj):
+        return obj.klinika.name
+
+class NarxlarSerializer(serializers.ModelSerializer):
+    xizmat = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Narxlar
+        fields = ["narx", "xizmat","id"]
+
+    def get_xizmat(self, obj):
+        return obj.xizmat.name
+
 
 class ShifokorlarSerializer(serializers.ModelSerializer):
     xizmatlar = serializers.SerializerMethodField()

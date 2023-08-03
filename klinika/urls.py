@@ -11,8 +11,10 @@ router = DefaultRouter()
 urlpatterns = [
     path("klinika/", KlinikaApiview.as_view()),
     path("xizmatlar/", XizmatlarApiview.as_view()),
+    path("xizmatlar/<int:pk>/", XizmatlarGet.as_view()),
     path("shifokorlar/", ShifokorlarApiview.as_view()),
     path("narxlar/", NarxlarApiview.as_view()),
+    path("narxlar/<int:pk>/", NarxlarGet.as_view()),
     path("shifokor/<int:pk>/", ShifokorGet.as_view()),
 ]
 

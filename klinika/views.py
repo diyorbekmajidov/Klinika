@@ -30,7 +30,6 @@ class KlinikaApiview(APIView):
         return Response(serializer.data)
     
 
-
     
 class XizmatlarApiview(APIView):
     
@@ -50,7 +49,18 @@ class XizmatlarApiview(APIView):
             xizmat = Xizmatlar.objects.all()
             serializer = XizmatlarSerializer(xizmat, many=True)
             return Response(serializer.data)
+
+class XizmatlarGet(APIView):
+        """
+        Xizmatlar get by id and xizmatlar malumotlari
+        """
+
+        def get(self, request, pk):
+            xizmat = Xizmatlar.objects.get(id=pk)
+            serializer = XizmatlarSerializer(xizmat)
+            return Response(serializer.data)
     
+
 class ShifokorlarApiview(APIView):
 
     @swagger_auto_schema(
@@ -68,8 +78,21 @@ class ShifokorlarApiview(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def get(self, request):
+        shifokor = Shifokorlar.objects.all()
+        serializer = ShifokorlarSerializer(shifokor, many=True)
+        return Response(serializer.data)
+    
 
 class ShifokorGet(APIView):
+    """
+    Shifokor get by id and shifokor malumotlari
+    """
+
+    @swagger_auto_schema(
+        responses={200: ShifokorlarSerializer(many=True)}
+    )
+
     def get(self, request, pk):
         shifokor = Shifokorlar.objects.get(id=pk)
         serializer = ShifokorlarSerializer(shifokor)
@@ -108,6 +131,20 @@ class NarxlarApiview(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+    
+class NarxlarGet(APIView):
+    """
+    Narxlar get by id and narxlar malumotlari
+    """
+
+    @swagger_auto_schema(
+        responses={200: NarxlarSerializer(many=True)}
+    )
+
+    def get(self, request, pk):
+        narx = Narxlar.objects.get(id=pk)
+        serializer = NarxlarSerializer(narx)
+        return Response(serializer.data)
     
     
     
